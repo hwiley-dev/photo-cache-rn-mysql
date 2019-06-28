@@ -1,0 +1,3 @@
+rootProject.name = 'photo_cache_rn_mysql'
+
+include ':app'
