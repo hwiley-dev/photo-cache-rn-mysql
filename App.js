@@ -1,49 +1,71 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+import React from 'react';
+import { View } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { createBottomTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation';
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import { HomeScreen, SearchScreen, SignupScreen, NotificationScreen, StashScreen, LoginScreen, MessageScreen, SettingsScreen, ProfileScreen } from './src/screens'
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
-    );
+// Stacks 
+const HomeStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Signup: SignupScreen,
+    Message: MessageScreen,
+    Login: LoginScreen,
+    Settings: SettingsScreen
   }
-}
+)
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+const ProfileStack = createStackNavigator({
+  Profile: ProfileScreen,
+  Login: LoginScreen,
+  Settings: SettingsScreen
+})
+
+
+const TabNav =  createBottomTabNavigator(
+  {
+    Home: HomeStack,
+    Search: SearchScreen,
+    Stash: StashScreen,
+    Notification: NotificationScreen,
+    Account: ProfileStack,
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        // NAV ICON LOGIC
+        let iconName;
+        if (routeName === 'Home') {
+          iconName = `globe`;
+       
+        } 
+        else if 
+          (routeName === 'Search') {
+          iconName = `search`;
+        }
+        else if 
+          (routeName === 'Stash') {
+          iconName = `plus`;
+        }
+        else if 
+          (routeName === 'Notification') {
+          iconName = `heart`;
+        }
+        else if 
+          (routeName === 'Account') {
+          iconName = `user`;
+        }
+        // You can return any component that you like here!
+        return <View><Icon name={iconName} size={30} color="#900"/></View>
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+    },
+  }
+);
+
+export default createAppContainer(TabNav)
