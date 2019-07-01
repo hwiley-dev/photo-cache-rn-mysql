@@ -2,8 +2,9 @@ import React from 'react';
 import { StackActions, NavigationActions } from 'react-navigation'; 
 import { View, Text, ImageBackground, Button, StyleSheet, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import GeoTest from '../../GeoTest'
 import Header from '../components/common'
+
 // import axios from 'axios';
 
 
@@ -25,8 +26,8 @@ class HomeScreen extends React.Component {
     render() {
       return (
     <ImageBackground source={ require('../../images/earth.png')} style= { {width: '100%', height: '100%', flex: 1, resizeMode: 'cover', backgroundColor: 'black', padding: 20 }}>
-   
         <View style={{alignItems: 'flex-end', justifyContent: 'flex-start', paddingTop: 10,  }}>
+   <GeoTest />
           <Icon name={'cogs'} size={30} color={'#e60000'} onPress={() => {
               this.props.navigation.dispatch(StackActions.reset({
                 index: 0,
